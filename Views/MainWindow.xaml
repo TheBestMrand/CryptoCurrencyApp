@@ -11,8 +11,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button Command="{Binding NavigateToHomeCommand}"></Button>
-
         <ContentControl Grid.Column="1" Content="{Binding NavigationService.CurrentView}">
 
         </ContentControl>
