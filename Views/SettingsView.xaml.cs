@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace CryptoCurrencyApp.Views
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml
+    /// Interaction logic for SettingsView.xaml
     /// </summary>
-    public partial class MainView : Page
+    public partial class SettingsView : UserControl
     {
-        public MainView()
+        public SettingsView()
         {
             InitializeComponent();
         }

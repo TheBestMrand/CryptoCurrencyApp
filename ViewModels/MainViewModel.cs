@@ -1,48 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.Input;
 using CryptoCurrencyApp.Models;
 using CryptoCurrencyApp.Services;
 
 namespace CryptoCurrencyApp.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase
     {
-        private readonly CurrencyService _service;
-        private ObservableCollection<Currency> _topCurrencies;
+        public RelayCommand NavigateToHomeCommand { get; set; }
 
-        public ObservableCollection<Currency> TopCurrencies
+        public MainViewModel(INavigationService navigationService) : base(navigationService)
         {
-            get => _topCurrencies;
-            set => SetField(ref _topCurrencies, value);
-        }
+            NavigateToHomeCommand = new RelayCommand(() =>
+            {
+                NavigationService.NavigateTo<HomeViewModel>();
+            }, () => true);
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public MainViewModel(CurrencyService service)
-        {
-            _service = service;
-        }
-
-        public async Task LoadData()
-        {
-            var currencies = await _service.GetTopCurrenciesAsync();
-            TopCurrencies = new ObservableCollection<Currency>(currencies);
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
+            NavigateToHomeCommand.Execute(true);
         }
     }
 }
