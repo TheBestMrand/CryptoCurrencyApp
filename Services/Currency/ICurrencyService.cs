@@ -10,5 +10,7 @@ namespace CryptoCurrencyApp.Services.Currency
     {
         Task<IEnumerable<Models.Currency>> GetTopCoins(int count);
         IEnumerable<Models.Currency> SearchCoins(string query);
+        Task UpdateCurrency();
+        void SetRefreshInterval(TimeSpan interval);
     }
 }

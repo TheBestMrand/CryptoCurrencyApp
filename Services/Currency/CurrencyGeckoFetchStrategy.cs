@@ -29,9 +29,7 @@ namespace CryptoCurrencyApp.Services.Currency
                 return currencies;
             }
 
-            MessageBox.Show("Error fetching currencies");
-
-            return null;
+            throw new Exception("Error fetching currencies");
         }
     }
 }

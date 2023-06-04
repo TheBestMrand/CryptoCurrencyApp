@@ -28,12 +28,21 @@ namespace CryptoCurrencyApp.ViewModels
         }
 
         public RelayCommand LoadCommand { get; set; }
+        public RelayCommand UpdateCommand { get; set; }
 
         public HomeViewModel(INavigationService navigationService, ICurrencyService currencyService) : base(navigationService)
         {
             _currencyService = currencyService;
             LoadCommand = new RelayCommand(async () => await Load(), () => true);
+            UpdateCommand = new RelayCommand(async () => await Update(), () => true);
         }
+
+        private async Task Update()
+        {
+            await _currencyService.UpdateCurrency();
+            await Load();
+        }
+
         public async Task Load()
         {
             Currencies = await _currencyService.GetTopCoins(10);
