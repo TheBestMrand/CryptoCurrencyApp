@@ -42,7 +42,7 @@ namespace CryptoCurrencyApp.Services.Currency
 
         public void GetTopCoins(int count = 10)
         {
-            if(_currencies != null)
+            if(_currencies is not null)
                 TopCurrencies = new ObservableCollection<Models.Currency>(_currencies.Take(count));
         }
 

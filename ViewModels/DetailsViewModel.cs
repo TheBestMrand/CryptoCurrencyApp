@@ -10,6 +10,9 @@ using CryptoCurrencyApp.Models;
 using CryptoCurrencyApp.Services;
 using CryptoCurrencyApp.Services.Currency;
 using CryptoCurrencyApp.Services.Market;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 
 namespace CryptoCurrencyApp.ViewModels
 {
@@ -17,20 +20,31 @@ namespace CryptoCurrencyApp.ViewModels
     {
         private readonly ICurrencyService _currencyService;
         private readonly IMarketService _marketService;
+        private readonly IGraphData _graphData;
+
+        private IEnumerable<OhlcData> _ohlcData;
 
         public ObservableCollection<Ticker> Tickers { get; set; }
 
         public Currency SelectedCurrency => _currencyService.SelectedCurrency;
 
-        public RelayCommand<Ticker> OpenUrlCommand;
+        public SeriesCollection OhlcSeriesCollection { get; set; }
 
-        public DetailsViewModel(INavigationService navigationService, ICurrencyService currencyService, IMarketService marketService) : base(navigationService)
+        public Func<double, string> PriceFormatter { get; set; } = value => value.ToString("C");
+        public Func<double, string> DataFormatter { get; set; }
+
+        public RelayCommand<Ticker> OpenUrlCommand;
+        public RelayCommand<string> GetGraphDataForDaysCommand { get; set; }
+
+        public DetailsViewModel(INavigationService navigationService, ICurrencyService currencyService, IMarketService marketService, IGraphData graphData) : base(navigationService)
         {
             _currencyService = currencyService;
             _marketService = marketService;
+            _graphData = graphData;
             Tickers = new ObservableCollection<Ticker>();
-            GetTickers();
-            OpenUrlCommand = new RelayCommand<Ticker>(OpenUrl);
+            //GetTickers();
+            //OpenUrlCommand = new RelayCommand<Ticker>(OpenUrl);
+            GetGraphDataForDaysCommand = new RelayCommand<string>(GetGraphDataForDays);
         }
 
         private void OpenUrl(Ticker? ticker)
@@ -42,9 +56,45 @@ namespace CryptoCurrencyApp.ViewModels
             });
         }
 
-        public void GetTickers()
+        public async void GetTickers()
         {
-            Tickers = new ObservableCollection<Ticker>(_marketService.GetTickersAsync(SelectedCurrency.Id).Result);
+            Tickers = new ObservableCollection<Ticker>(await _marketService.GetTickersAsync(SelectedCurrency.Id));
+        }
+
+        public void CacheGraphData()
+        {
+            _ohlcData = _graphData.GetOhlcData(SelectedCurrency.Id, 30).Result;
+
+            var ohlcSeries = new OhlcSeries
+            {
+                Values = new ChartValues<OhlcPoint>(_ohlcData.Select(x => new OhlcPoint(x.Open, x.High, x.Low, x.Close)))
+            };
+
+            OhlcSeriesCollection = new SeriesCollection
+            {
+                ohlcSeries
+            };
+
+            DataFormatter = value => new DateTime((long)value).ToString("d");
+        }
+
+        public void GetGraphDataForDays(string daysStr)
+        {
+            int days = int.Parse(daysStr);
+            if (_ohlcData is null)
+            {
+                CacheGraphData();
+            }
+            var correctDays = _ohlcData.Take(days);
+            var ohlcSeries = new OhlcSeries
+            {
+                Values = new ChartValues<OhlcPoint>(_ohlcData.Select(x => new OhlcPoint(x.Open, x.High, x.Low, x.Close)))
+            };
+            OhlcSeriesCollection = new SeriesCollection
+            {
+                ohlcSeries
+            };
+            DataFormatter = value => new DateTime((long)value).ToString("d");
         }
     }
 }

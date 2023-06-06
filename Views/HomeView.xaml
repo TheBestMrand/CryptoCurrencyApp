@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CryptoCurrencyApp.Views"
-             mc:Ignorable="d" 
-             >
+             mc:Ignorable="d">
     <Border BorderBrush="#333333"
             Background="#333333"
             BorderThickness="1">
@@ -24,13 +23,13 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <Rectangle Grid.Column="0" 
-                           Width="64" Height="64" 
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center"
-                           Fill="Yellow">
-                </Rectangle>
+                
+                <Image Grid.Column="0"
+                       Width="64"
+                       Height="64"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Source="../Resources/CryptoCoins.png"/>
                 <Label Grid.Column="1" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
@@ -54,12 +53,12 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <Rectangle Grid.Column="0" 
-                               Fill="Azure" 
-                               Width="20" 
-                               Height="20" 
-                               Margin="5 0 10 0"></Rectangle>
+                    
+                    <Image Grid.Column="0"
+                           Width="20"
+                           Height="20"
+                           Margin="5 0 10 0"
+                           Source="../Resources/SearchIcon.png"/>
 
                     <TextBox Grid.Column="1" 
                              Background="Transparent"
@@ -213,9 +212,15 @@
                     </Style>
                 </DockPanel.Resources>
                 <Separator Width="95" Visibility="Hidden"/>
-                <Button Command="{Binding NavigateToSettingsCommand}"/>
-                <Button/>
-                <Button Command="{Binding RefreshCommand}"/>
+                <Button Command="{Binding NavigateToSettingsCommand}">
+                    <Image Source="../Resources/SettingsIcon.png" Height="16" Width="16"/>
+                </Button>
+                <Button>
+                    <Image Source="../Resources/LightIcon.png" Height="16" Width="16"/>
+                </Button>
+                <Button Command="{Binding RefreshCommand}">
+                    <Image Source="../Resources/UpdateIcon.png" Width="16" Height="16"/>
+                </Button>
             </DockPanel>
         </Grid>
     </Border>

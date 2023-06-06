@@ -25,8 +25,11 @@ namespace CryptoCurrencyApp.Models
         [JsonPropertyName("total_volume")]
         public decimal Volume { get; set; }
 
-        //[JsonPropertyName("price_change_percentage_24h")]
-        //public double PriceChangePercentage24h { get; set; }
+        [JsonPropertyName("price_change_percentage_24h")]
+        public decimal PriceChangePercentage24h { get; set; }
+
+        [JsonPropertyName("price_change_24h")]
+        public decimal PriceChange24h { get; set; }
     }
 
 }

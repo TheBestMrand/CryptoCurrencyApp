@@ -46,6 +46,7 @@ namespace CryptoCurrencyApp
             services.AddSingleton<ICurrencySearchStrategy, CurrencyGeckoSearchStrategy>();
             services.AddSingleton<ICurrencyService, CurrencyService>();
             services.AddSingleton<IMarketService, MarketService>();
+            services.AddSingleton<IGraphData, GraphData>();
             #endregion
         }
 

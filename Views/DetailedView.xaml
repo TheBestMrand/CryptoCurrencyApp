@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CryptoCurrencyApp.Views"
              xmlns:models="clr-namespace:CryptoCurrencyApp.Models"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
+    <!--<UserControl.Resources>
         <models:TrustFromColourConverter x:Key="TrustFromColourConverter" />
-    </UserControl.Resources>
+    </UserControl.Resources>-->
     <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.RowDefinitions>
@@ -21,7 +22,24 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <ListBox Grid.Column="1"
+            <!--<wpf:CartesianChart Grid.Row="0" Grid.Column="0" Series="{Binding OhlcSeriesCollection}">
+                <wpf:CartesianChart.AxisY>
+                    <wpf:Axis LabelFormatter="{Binding PriceFormatter}"></wpf:Axis>
+                </wpf:CartesianChart.AxisY>
+                <wpf:CartesianChart.AxisX>
+                    <wpf:Axis LabelFormatter="{Binding DateFormatter}"></wpf:Axis>
+                </wpf:CartesianChart.AxisX>
+            </wpf:CartesianChart>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom">
+                <Button Command="{Binding GetGraphDataForDaysCommand}" CommandParameter="7" Content="7 days" />
+                <Button Command="{Binding GetGraphDataForDaysCommand}" CommandParameter="30" Content="30 days" />
+                <Button Command="{Binding GetGraphDataForDaysCommand}" CommandParameter="90" Content="90 days" />
+                <Button Command="{Binding GetGraphDataForDaysCommand}" CommandParameter="180" Content="180 days" />
+                <Button Command="{Binding GetGraphDataForDaysCommand}" CommandParameter="365" Content="365 days" />
+            </StackPanel>-->
+
+            <!--<ListBox Grid.Column="1"
                 ItemsSource="{Binding Tickers}" 
                 Background="#333333">
                 <ListBox.ItemTemplate>
@@ -53,12 +71,15 @@
                         <StackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
-            </ListBox>
+            </ListBox>-->
 
-            <StackPanel Orientation="Vertical" 
+            <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                          HorizontalScrollBarVisibility="Disabled"
                         Grid.Column="0" 
                         Grid.ColumnSpan="2" 
-                        Grid.Row="1"
+                        Grid.Row="1">
+            <StackPanel Orientation="Vertical" 
+                        
                         Margin="0 10 0 0"
                         Background="#292929">
                 <StackPanel.Resources>
@@ -80,6 +101,11 @@
                         <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="FontSize" Value="16"></Setter>
                     </Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="#F5F5F5"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="16"/>
+                    </Style>
                 </StackPanel.Resources>
                 <Border>
                     <StackPanel Orientation="Horizontal">
@@ -92,28 +118,29 @@
                 <Border>
                     <StackPanel Orientation="Horizontal">
                         <Ellipse/>
-                        <Label Content="Currency price: "/>
-                        <TextBlock Text="{Binding SelectedCurrency.CurrentPrice}"
+                        <Label Content="Price Change (24h): "/>
+                        <TextBlock Text="{Binding SelectedCurrency.PriceChange24h}"
                                    HorizontalAlignment="Right"/>
                     </StackPanel>
                 </Border>
                 <Border>
                     <StackPanel Orientation="Horizontal">
                         <Ellipse/>
-                        <Label Content="Currency price: "/>
-                        <TextBlock Text="{Binding SelectedCurrency.CurrentPrice}"
+                        <Label Content="Price Change (24h) %: "/>
+                        <TextBlock Text="{Binding SelectedCurrency.PriceChangePercentage24h}"
                                    HorizontalAlignment="Right"/>
                     </StackPanel>
                 </Border>
                 <Border>
                     <StackPanel Orientation="Horizontal">
                         <Ellipse/>
-                        <Label Content="Value: "/>
+                        <Label Content="Volume: "/>
                         <TextBlock Text="{Binding SelectedCurrency.Volume}"
                                    HorizontalAlignment="Right"/>
                     </StackPanel>
                 </Border>
             </StackPanel>
+            </ScrollViewer>
         </Grid>
     </ScrollViewer>
 </UserControl>
