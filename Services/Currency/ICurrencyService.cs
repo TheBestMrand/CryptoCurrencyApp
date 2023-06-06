@@ -14,5 +14,6 @@ namespace CryptoCurrencyApp.Services.Currency
         void SetRefreshInterval(TimeSpan interval);
         ObservableCollection<Models.Currency> TopCurrencies { get; set; }
         public Models.Currency SelectedCurrency { get; set;}
+        event Action SelectedCurrencyChanged;
     }
 }

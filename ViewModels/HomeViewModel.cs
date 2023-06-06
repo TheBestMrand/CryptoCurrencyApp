@@ -36,7 +36,7 @@ namespace CryptoCurrencyApp.ViewModels
         public Currency SelectedCurrency
         {
             get => _currencyService.SelectedCurrency;
-            set { _currencyService.SelectedCurrency = value; 
+            set { _currencyService.SelectedCurrency = value;
                 OnPropertyChanged(nameof(SelectedCurrency));
                 SelectCurrency(value as Currency);
             }

@@ -16,12 +16,25 @@ namespace CryptoCurrencyApp.Services.Currency
         private readonly ICurrencySearchStrategy _currencySearchStrategy;
         private List<Models.Currency> _currencies;
 
+        private Models.Currency _selectedCurrency;
 
         private Timer _timer;
         private TimeSpan _refreshInterval;
 
         public ObservableCollection<Models.Currency> TopCurrencies { get; set; }
-        public Models.Currency SelectedCurrency { get; set; }
+
+        public event Action? SelectedCurrencyChanged;
+
+        public Models.Currency SelectedCurrency
+        {
+            get => _selectedCurrency;
+            set
+            {
+                _selectedCurrency = value;
+                SelectedCurrencyChanged?.Invoke();
+            }
+        }
+
 
         public CurrencyService(ICurrencyFetchStrategy currencyFetchStrategy,
             ICurrencySearchStrategy currencySearchStrategy)

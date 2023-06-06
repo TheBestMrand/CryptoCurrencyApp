@@ -44,7 +44,13 @@ namespace CryptoCurrencyApp.ViewModels
             Tickers = new ObservableCollection<Ticker>();
             //GetTickers();
             //OpenUrlCommand = new RelayCommand<Ticker>(OpenUrl);
+            _currencyService.SelectedCurrencyChanged += RefreshData;
             GetGraphDataForDaysCommand = new RelayCommand<string>(GetGraphDataForDays);
+        }
+
+        private void RefreshData()
+        {
+            OnPropertyChanged(nameof(SelectedCurrency));
         }
 
         private void OpenUrl(Ticker? ticker)
