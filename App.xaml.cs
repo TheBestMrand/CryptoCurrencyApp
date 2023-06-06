@@ -3,6 +3,7 @@ using System.Windows;
 using CryptoCurrencyApp.Models;
 using CryptoCurrencyApp.Services;
 using CryptoCurrencyApp.Services.Currency;
+using CryptoCurrencyApp.Services.Market;
 using CryptoCurrencyApp.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,6 +33,7 @@ namespace CryptoCurrencyApp
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<SettingsViewModel>();
             services.AddSingleton<HomeViewModel>();
+            services.AddSingleton<DetailsViewModel>();
             #endregion
 
             #region Servies
@@ -43,7 +45,7 @@ namespace CryptoCurrencyApp
             services.AddSingleton<ICurrencyFetchStrategy, CurrencyGeckoFetchStrategy>();
             services.AddSingleton<ICurrencySearchStrategy, CurrencyGeckoSearchStrategy>();
             services.AddSingleton<ICurrencyService, CurrencyService>();
-
+            services.AddSingleton<IMarketService, MarketService>();
             #endregion
         }
 

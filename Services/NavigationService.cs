@@ -8,6 +8,7 @@ namespace CryptoCurrencyApp.Services
     public class NavigationService : ObservableObject, INavigationService
     {
         private ViewModelBase _currentViewModel;
+        private ViewModelBase _sideViewModel;
 
         public ViewModelBase CurrentView
         {
@@ -15,6 +16,16 @@ namespace CryptoCurrencyApp.Services
             set
             {
                 _currentViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ViewModelBase SideView
+        {
+            get => _sideViewModel;
+            set
+            {
+                _sideViewModel = value;
                 OnPropertyChanged();
             }
         }
@@ -33,6 +44,11 @@ namespace CryptoCurrencyApp.Services
         public void NavigateTo<T>() where T : ViewModelBase
         {
             CurrentView = _viewModelPredicate.Invoke(typeof(T));
+        }
+
+        public void NavigateToSide<T>() where T : ViewModelBase
+        {
+            SideView = _viewModelPredicate.Invoke(typeof(T));
         }
     }
 }

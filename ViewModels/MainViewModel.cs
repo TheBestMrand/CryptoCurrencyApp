@@ -12,7 +12,7 @@ namespace CryptoCurrencyApp.ViewModels
         {
             NavigateToHomeCommand = new RelayCommand(() =>
             {
-                NavigationService.NavigateTo<HomeViewModel>();
+                NavigationService.NavigateToSide<HomeViewModel>();
             }, () => true);
 
             NavigateToHomeCommand.Execute(true);

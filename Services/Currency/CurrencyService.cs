@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -14,8 +15,13 @@ namespace CryptoCurrencyApp.Services.Currency
         private readonly ICurrencyFetchStrategy _currencyFetchStrategy;
         private readonly ICurrencySearchStrategy _currencySearchStrategy;
         private List<Models.Currency> _currencies;
+
+
         private Timer _timer;
         private TimeSpan _refreshInterval;
+
+        public ObservableCollection<Models.Currency> TopCurrencies { get; set; }
+        public Models.Currency SelectedCurrency { get; set; }
 
         public CurrencyService(ICurrencyFetchStrategy currencyFetchStrategy,
             ICurrencySearchStrategy currencySearchStrategy)
@@ -28,19 +34,16 @@ namespace CryptoCurrencyApp.Services.Currency
             UpdateCurrency();
         }
 
-        private async void UpdateCurrency(object? state = null)
+        public async void UpdateCurrency(object? state = null)
         {
             _currencies = (List<Models.Currency>)(await _currencyFetchStrategy.Fetch());
+            GetTopCoins();
         }
 
-        public async Task UpdateCurrency()
+        public void GetTopCoins(int count = 10)
         {
-            UpdateCurrency(null);
-        }
-
-        public Task<IEnumerable<Models.Currency>> GetTopCoins(int count)
-        {
-            return Task.FromResult(_currencies.OrderByDescending(x => x.CurrentPrice).Take(count));
+            if(_currencies != null)
+                TopCurrencies = new ObservableCollection<Models.Currency>(_currencies.Take(count));
         }
 
         public IEnumerable<Models.Currency> SearchCoins(string query)

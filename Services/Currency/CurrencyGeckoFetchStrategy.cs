@@ -29,7 +29,7 @@ namespace CryptoCurrencyApp.Services.Currency
                 return currencies;
             }
 
-            throw new Exception("Error fetching currencies");
+            throw new Exception($"Error fetching currencies, status: {responce.StatusCode}");
         }
     }
 }

@@ -5,8 +5,79 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CryptoCurrencyApp.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="Azure">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#292929">
     <Grid>
-        <TextBlock Text="dsadas"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" 
+                    HorizontalAlignment="Left"
+                    MaxWidth="600"
+                    MinWidth="100">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label MinHeight="30" 
+                       MaxHeight="50"
+                       MinWidth="100"
+                       MaxWidth="200"
+                       Foreground="#F5F5F5">
+                    <Label.Content>
+                        <AccessText TextWrapping="WrapWithOverflow" Text="Set amount of displayed top currencies"></AccessText>
+                    </Label.Content>
+                </Label>
+                <Slider x:Name="displayAmountSlider" 
+                        Grid.Column="1"
+                        Minimum="1" 
+                        Maximum="10" 
+                        TickFrequency="1" 
+                        TickPlacement="BottomRight" 
+                        Width="200" Margin="10,0"/>
+
+                <TextBlock 
+                           Grid.Column="1"
+                           FontSize="14"
+                           VerticalAlignment="Center" 
+                           Margin="10,20,0,0"/>
+            </Grid>
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Foreground" Value="#F5F5F5"/>
+                        <Setter Property="Background" Value="#292929"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <TextBlock Text="Update Interval: " 
+                           Grid.Column="0"
+                           FontSize="16" 
+                           VerticalAlignment="Center"
+                           Foreground="#F5F5F5"/>
+                <ComboBox x:Name="IntervalComboBox"
+                          Width="200" Margin="10,0"
+                          Grid.Column="1"
+                          Foreground="#F5F5F5"
+                          Background="#393939">
+                    <ComboBoxItem Content="1 minute"/>
+                    <ComboBoxItem Content="5 minutes"/>
+                    <ComboBoxItem Content="15 minutes"/>
+                    <ComboBoxItem Content="30 minutes"/>
+                    <ComboBoxItem Content="1 hour"/>
+                </ComboBox>
+            </Grid>
+        </StackPanel>
+        <TextBlock Grid.Row="1" 
+                   Foreground="#F5F5F5"
+                   Text="Made by @TheBestMrand" 
+                   FontSize="12"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right"
+                   Margin="10"/>
     </Grid>
 </UserControl>
